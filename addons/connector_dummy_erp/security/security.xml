@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Groups -->
+        <record id="dummy_erp_integration_category" model="ir.module.category">
+            <field name="name">Dummy ERP Integration</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="group_dummy_erp_integration_manager" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="comment">Dummy ERP Integration Administrator</field>
+            <field name="category_id" ref="connector_dummy_erp.dummy_erp_integration_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <!-- Record rules -->
+        <record id="dummy_erp_integration_multi_company" model="ir.rule">
+            <field name="name">Dummy ERP Integration multi company rule</field>
+            <field name="model_id" ref="model_dummy_erp_integration" />
+            <field eval="True" name="global" />
+            <field name="domain_force">['|',('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="dummy_erp_integration_log_multi_company" model="ir.rule">
+            <field name="name">Dummy ERP Integration log multi company rule</field>
+            <field name="model_id" ref="model_dummy_erp_integration_log" />
+            <field eval="True" name="global" />
+            <field name="domain_force">['|',('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

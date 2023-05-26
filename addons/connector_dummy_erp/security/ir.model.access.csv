@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dummy_erp_integration_admin,dummy.erp.integration.group.manager,model_dummy_erp_integration,connector_dummy_erp.group_dummy_erp_integration_manager,1,1,1,1
+access_dummy_erp_integration_log_admin,dummy.erp.integration.log.group.manager,model_dummy_erp_integration_log,connector_dummy_erp.group_dummy_erp_integration_manager,1,0,0,0

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Views -->
+        <record id="dummy_erp_integration_view_form" model="ir.ui.view">
+            <field name="name">dummy.erp.integration.view.form</field>
+            <field name="model">dummy.erp.integration</field>
+            <field name="arch" type="xml">
+                <form string="Dummy ERP Configuration">
+                    <header>
+                        <button name="test_connection" string="TEST CONNECTION" class="oe_link" type="object"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <field name="cron_ids" invisible="1"/>
+                            <field name="integration_log_ids" invisible="1"/>
+                            <button class="oe_stat_button" name="action_view_crons" type="object"
+                                    attrs="{'invisible': [('cron_ids', '=', [])]}"
+                                    icon="fa-tasks">
+                                <field string="Jobs" name="cron_count" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" name="action_view_log" type="object"
+                                    icon="fa-history">
+                                Logs
+                            </button>
+                            <button name="toggle_active" string="Activate" type="object"
+                                    icon="fa-archive"
+                                    attrs="{'invisible': [('active', '=', True)]}"/>
+                            <button name="toggle_active" string="Deactivate" type="object"
+                                    icon="fa-archive"
+                                    attrs="{'invisible': [('active', '=', False)]}"/>
+                        </div>
+
+                        <group string="Basic Configuration" name="erp_basic">
+                            <field name="name"/>
+                            <field name="base_url"/>
+                        </group>
+
+                        <group string="Sale Configuration">
+                            <field name="pricelist_id"
+                                   options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"/>
+                            <field name="default_tax_ids"
+                                   options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                                   widget="many2many_tags"/>
+                        </group>
+
+                        <group string="Automation Configuration"
+                               attrs="{'invisible': [('active', '=', False)]}"
+                               name="erp_automation">
+                            <field name="auto_import_product" widget="boolean_toggle"/>
+                            <field name="auto_import_user" widget="boolean_toggle"/>
+                            <field name="auto_export_product" widget="boolean_toggle"/>
+                            <field name="auto_export_cart" widget="boolean_toggle"/>
+                        </group>
+
+                        <group string="Other" name="other" groups="base.group_multi_company">
+                            <field name="company_id"
+                                   groups="base.group_multi_company"
+                                   options="{'no_create': True, 'no_edit': True, 'no_quick_create': True, 'no_open': True}"/>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="dummy_erp_integration_view_tree" model="ir.ui.view">
+            <field name="name">dummy.erp.integration.view.tree</field>
+            <field name="model">dummy.erp.integration</field>
+            <field name="arch" type="xml">
+                <tree string="Dummy ERP Configuration">
+                    <field name="name"/>
+                    <field name="base_url"/>
+                    <field name="pricelist_id"/>
+                    <field name="active" widget="boolean_toggle"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="dummy_erp_integration_view_search" model="ir.ui.view">
+            <field name="name">dummy.erp.integration.view.search</field>
+            <field name="model">dummy.erp.integration</field>
+            <field name="arch" type="xml">
+                <search string="Dummy ERP Configuration">
+                    <filter string="All" name="all_integrations"
+                            domain="['|', ('active', '=', True), ('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Actions -->
+        <record id="act_window_dummy_erp_integration" model="ir.actions.act_window">
+            <field name="name">Dummy ERP Integration</field>
+            <field name="res_model">dummy.erp.integration</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_all_integrations': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    No Configured Dummy ERP Integrations
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu items -->
+        <menuitem id="menu_dummy_erp_integration_root"
+                  groups="connector_dummy_erp.group_dummy_erp_integration_manager"
+                  sequence="10" name="Dummy ERP Integration"
+                  web_icon="connector_dummy_erp,static/description/icon.png"/>
+
+        <menuitem id="menu_dummy_erp_integration" name="Integrations" sequence="1"
+                  parent="menu_dummy_erp_integration_root"
+                  action="act_window_dummy_erp_integration"/>
+
+    </data>
+</odoo>
