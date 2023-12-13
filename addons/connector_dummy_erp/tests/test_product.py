@@ -21,4 +21,4 @@ class TestProduct(TransactionCase):
                          "When product created it should be by default update to dummy ERP if it does "
                          "not have dummy ERP ID")
 
-    # TODO: Finish testing product
+    # TODO: Finish testing product all functions
