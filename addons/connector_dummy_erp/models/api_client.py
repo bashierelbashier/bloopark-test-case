@@ -12,7 +12,7 @@ def get_headers():
 
 
 def get_request_url(integration, path):
-    """Compose the request URL
+    """Compose the request URL from given Args
 
     Args:
         integration (object): the dummy.erp.integration object
